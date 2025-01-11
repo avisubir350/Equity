@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Equity Buddy</title>
+    <style>
+        html,
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            margin: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 200px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+        }
+
+        h1 {
+            font-family: Arial, sans-serif;
+            font-size: 36px;
+            color: #333;
+            text-align: left;
+            margin-left: 50px;
+        }
+
+        .login-container {
+            display: flex;
+            height: 100%;
+        }
+
+        .div-header {
+            flex: 2.5;
+            padding: 20px;
+            background-color: cadetblue;
+        }
+
+        .div-cred {
+            flex: 1;
+            padding: 20px;
+            background-color: azure;
+        }
+    </style>
+
+<script>
+    function handleLogin() {
+        // Get username and password values
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const payload = {
+            action: "auth",
+            auth: {
+                email: username,
+                password: password,
+            }
+        }
+
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+
+        const body = {
+            method: "POST",
+            body: JSON.stringify(payload),
+            headers: headers,
+        }
+
+        fetch("http:\/\/localhost:8080/handle", body)
+        .then((response) => response.json())
+        .then((data) => {
+                console.log("Response from broker service: " + data.message);
+        })
+        .catch((error) => {
+            console.log("Error happened");
+        })
+    }
+</script>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <div class="div-header">
+            <h1 class="heading">Welcome to Equity Buddy!!</h1>
+        </div>
+        <div class="div-cred">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="button" onclick="handleLogin()">Login</button>
+        </div>
+    </div>
+</body>
+
+</html>
